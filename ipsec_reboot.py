@@ -4,36 +4,38 @@ import time
 from datetime import datetime
 
 def main():
-    #tn.read_until(b"(config)> ")
-    tn.write(b"show ipsec\n")
-    time.sleep(3)
-    line = tn.read_very_eager()  # Read one line
-    print(line)
-    if b'ESTABLISHED' in line:  # last line, no more read
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        print("The IPSec is running.")
-        print("Current Time =", current_time)
-        time.sleep(5)
-        main()
-    else:
-        tn.write(b"crypto map IPSec\n")
-        line = tn.read_until(b"\n")  # Read one line
+    x = 1
+    while x == 1:
+        #tn.read_until(b"(config)> ")
+        tn.write(b"show ipsec\n")
+        time.sleep(3)
+        line = tn.read_very_eager()  # Read one line
         print(line)
-        time.sleep(5)
-        tn.write(b"no enable\n")
-        line = tn.read_until(b"\n")  # Read one line
-        print(line)
-        time.sleep(5)
-        tn.write(b"enable\n")
-        line = tn.read_until(b"\n")  # Read one line
-        print(line)
-        time.sleep(5)
-        tn.write(b"exit\n")
-        line = tn.read_until(b"\n")  # Read one line
-        print(line)
-        time.sleep(60)
-        main()
+        if b'ESTABLISHED' in line:  # last line, no more read
+            now = datetime.now()
+            current_time = now.strftime("%H:%M:%S")
+            print("The IPSec is running.")
+            print("Current Time =", current_time)
+            time.sleep(5)
+            #main()
+        else:
+            tn.write(b"crypto map IPSec\n")
+            line = tn.read_until(b"\n")  # Read one line
+            print(line)
+            time.sleep(5)
+            tn.write(b"no enable\n")
+            line = tn.read_until(b"\n")  # Read one line
+            print(line)
+            time.sleep(5)
+            tn.write(b"enable\n")
+            line = tn.read_until(b"\n")  # Read one line
+            print(line)
+            time.sleep(5)
+            tn.write(b"exit\n")
+            line = tn.read_until(b"\n")  # Read one line
+            print(line)
+            time.sleep(60)
+            #main()
 
 HOST = "10.10.10.1"
 user = 'pi'
